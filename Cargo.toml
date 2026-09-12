@@ -1,0 +1,28 @@
+[package]
+name = "grab-cli"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# CLI and Errors
+anyhow = "1.0.104"
+clap = { version = "4.6.6", features = ["derive", "cargo"] }
+
+# Matching Engine
+regex = "1.13.1"
+aho-corasick = "1.1.5"
+memchr = "2.8.3"
+
+# File Traversal and Multithreading
+crossbeam-channel = "0.5.17"
+ignore = "0.4.33"
+rayon = "1.12.0"
+memmap2 = "0.9.11"
+
+# Terminal Output and Detection
+colored = "3.1.1"
+is-terminal = "0.4.17"
+
+# Interactive TUI
+crossterm = { version = "0.29.0", features = ["event-stream"] }
+ratatui = "0.30.2"
