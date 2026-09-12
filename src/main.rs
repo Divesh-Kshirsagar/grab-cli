@@ -1,8 +1,12 @@
 mod cli;
+mod matcher;
+mod printer;
 
 use anyhow::{Context, Result};
 use clap::Parser;
 use cli::Cli;
+use matcher::literal::find_literal_str;
+use matcher::regex::find_regex_pattern;
 use std::fs;
 use std::io;
 use std::io::Read;
@@ -15,7 +19,7 @@ fn main() -> Result<()> {
 
     if let Some(path) = &args.path {
         if path.exists() {
-            fs::read_to_string(path).context("Unable to read the file in path {path}")?;
+            buffer = fs::read_to_string(path).context("Unable to read the file in path {path}")?;
         }
     } else {
         io::stdin()
@@ -23,12 +27,10 @@ fn main() -> Result<()> {
             .context("Failed to read.")?;
     }
 
-    for (idx, line) in buffer.lines().enumerate() {
-        let line_num = idx + 1;
-
-        if line.contains(&pattern) {
-            println!("Line {line_num} at {line}");
-        }
+    if args.regex {
+        find_regex_pattern(pattern, buffer);
+    } else {
+        find_literal_str(pattern, buffer);
     }
 
     Ok(())

@@ -10,4 +10,8 @@ pub struct Cli {
     /// The optional path
     #[arg(short, long)]
     pub path: Option<PathBuf>,
+
+    /// The optional flag for regex search
+    #[arg(short, long)]
+    pub regex: bool,
 }
